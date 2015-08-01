@@ -1,204 +1,25 @@
+-- Первое выполнение sql-запроса
 --
--- PostgreSQL database dump
+CREATE DATABASE "rafael.chumarin" WITH ENCODING 'UTF8' LC_COLLATE='ru_RU.UTF-8' LC_CTYPE='ru_RU.UTF-8' TEMPLATE=template0;
+
+--Второй sql-запрос необходимо выполнять в БД rafael.chumarin
 --
-
--- Dumped from database version 9.4.4
--- Dumped by pg_dump version 9.4.4
--- Started on 2015-07-29 03:55:32 MSK
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- TOC entry 2272 (class 1262 OID 16628)
--- Name: rafael.chumarin; Type: DATABASE; Schema: -; Owner: rafael.chumarin
---
-
-CREATE DATABASE "rafael.chumarin" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'ru_RU.UTF-8' LC_CTYPE = 'ru_RU.UTF-8';
-
-
 ALTER DATABASE "rafael.chumarin" OWNER TO "rafael.chumarin";
-
-\connect "rafael.chumarin"
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- TOC entry 174 (class 3079 OID 12123)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- TOC entry 2275 (class 0 OID 0)
--- Dependencies: 174
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = public, pg_catalog;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- TOC entry 172 (class 1259 OID 16638)
--- Name: messages; Type: TABLE; Schema: public; Owner: rafael.chumarin; Tablespace: 
---
-
-CREATE TABLE messages (
-    id integer NOT NULL,
-    message character(120),
-    clientid character(3)
-);
-
-
-ALTER TABLE messages OWNER TO "rafael.chumarin";
-
---
--- TOC entry 173 (class 1259 OID 16692)
--- Name: users; Type: TABLE; Schema: public; Owner: rafael.chumarin; Tablespace: 
---
-
-CREATE TABLE users (
-    clientid character(3) NOT NULL,
-    fname character(15)
-);
-
-
-ALTER TABLE users OWNER TO "rafael.chumarin";
-
---
--- TOC entry 2266 (class 0 OID 16638)
--- Dependencies: 172
--- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: rafael.chumarin
---
-
-INSERT INTO messages (id, message, clientid) VALUES (1, 'Привет. Как дела?                                                                                                       ', '001');
-INSERT INTO messages (id, message, clientid) VALUES (2, 'Привет, хорошо. Как сам?                                                                                                ', '002');
-INSERT INTO messages (id, message, clientid) VALUES (3, 'Привет, замечательно. Как твои дела?                                                                                    ', '003');
-INSERT INTO messages (id, message, clientid) VALUES (4, 'Салют! Все тип-топ. Как твои делишки?                                                                                   ', '004');
-INSERT INTO messages (id, message, clientid) VALUES (5, 'Дела норм. Давайте встретимся на выходных. Что скажете?                                                                 ', '001');
-INSERT INTO messages (id, message, clientid) VALUES (6, 'Давайте в ближайшую субботу на 15ч в Центре?                                                                            ', '002');
-INSERT INTO messages (id, message, clientid) VALUES (7, 'Отлично. Как у остальных со временем?                                                                                   ', '001');
-INSERT INTO messages (id, message, clientid) VALUES (8, 'Давате, я могу.                                                                                                         ', '003');
-INSERT INTO messages (id, message, clientid) VALUES (9, 'У меня тоже все получается.                                                                                             ', '004');
-INSERT INTO messages (id, message, clientid) VALUES (10, 'Отлично. Тогда до встречи!                                                                                              ', '001');
-INSERT INTO messages (id, message, clientid) VALUES (11, 'До встречи!                                                                                                             ', '002');
-INSERT INTO messages (id, message, clientid) VALUES (12, 'Пока!                                                                                                                   ', '003');
-INSERT INTO messages (id, message, clientid) VALUES (13, 'До встречи!                                                                                                             ', '004');
-
-
---
--- TOC entry 2267 (class 0 OID 16692)
--- Dependencies: 173
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: rafael.chumarin
---
-
-INSERT INTO users (clientid, fname) VALUES ('001', 'Рафаэль        ');
-INSERT INTO users (clientid, fname) VALUES ('003', 'Ильвир         ');
-INSERT INTO users (clientid, fname) VALUES ('004', 'Антон          ');
-INSERT INTO users (clientid, fname) VALUES ('002', 'Ильсур         ');
-
-
---
--- TOC entry 2153 (class 2606 OID 16642)
--- Name: pk_message_id; Type: CONSTRAINT; Schema: public; Owner: rafael.chumarin; Tablespace: 
---
-
-ALTER TABLE ONLY messages
-    ADD CONSTRAINT pk_message_id PRIMARY KEY (id);
-
-
---
--- TOC entry 2155 (class 2606 OID 16696)
--- Name: pk_users_clientid; Type: CONSTRAINT; Schema: public; Owner: rafael.chumarin; Tablespace: 
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT pk_users_clientid PRIMARY KEY (clientid);
-
-
---
--- TOC entry 2151 (class 1259 OID 16702)
--- Name: fki_users_clientid; Type: INDEX; Schema: public; Owner: rafael.chumarin; Tablespace: 
---
-
-CREATE INDEX fki_users_clientid ON messages USING btree (clientid);
-
-
---
--- TOC entry 2156 (class 2606 OID 16697)
--- Name: fk_users_clientid; Type: FK CONSTRAINT; Schema: public; Owner: rafael.chumarin
---
-
-ALTER TABLE ONLY messages
-    ADD CONSTRAINT fk_users_clientid FOREIGN KEY (clientid) REFERENCES users(clientid);
-
-
---
--- TOC entry 2274 (class 0 OID 0)
--- Dependencies: 6
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- TOC entry 2276 (class 0 OID 0)
--- Dependencies: 173
--- Name: users; Type: ACL; Schema: public; Owner: rafael.chumarin
---
-
-REVOKE ALL ON TABLE users FROM PUBLIC;
-REVOKE ALL ON TABLE users FROM "rafael.chumarin";
-GRANT ALL ON TABLE users TO "rafael.chumarin";
-GRANT SELECT ON TABLE users TO PUBLIC;
-
-
---
--- TOC entry 1550 (class 826 OID 16720)
--- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: -; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON SEQUENCES  FROM PUBLIC;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON SEQUENCES  FROM postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON SEQUENCES  TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT SELECT ON SEQUENCES  TO PUBLIC;
-
-
---
--- TOC entry 1551 (class 826 OID 16722)
--- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: -; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON TABLES  FROM PUBLIC;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON TABLES  FROM postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON TABLES  TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT SELECT ON TABLES  TO PUBLIC;
-
-
--- Completed on 2015-07-29 03:55:32 MSK
-
---
--- PostgreSQL database dump complete
---
-
+CREATE TABLE IF NOT EXISTS users (clientid character(3) NOT NULL PRIMARY KEY, fname character(15));
+CREATE TABLE IF NOT EXISTS messages (id integer NOT NULL PRIMARY KEY, message character(120), clientid character(3), FOREIGN KEY (clientid) REFERENCES users(clientid));
+INSERT INTO users (clientid, fname) VALUES 
+('001', 'Рафаэль'), ('002', 'Ильвир'), ('003', 'Антон'), ('004', 'Ильсур');
+INSERT INTO messages (id, message, clientid) VALUES 
+(1, 'Привет. Как дела?', '001'),
+(2, 'Привет, хорошо. Как сам?', '002'),
+(3, 'Привет, замечательно. Как твои дела?', '003'),
+(4, 'Салют! Все тип-топ. Как твои делишки?', '004'),
+(5, 'Дела норм. Давайте встретимся на выходных. Что скажете?', '001'),
+(6, 'Давайте в ближайшую субботу на 15ч в Центре?', '002'),
+(7, 'Отлично. Как у остальных со временем?', '001'),
+(8, 'Давате, я могу.', '003'),
+(9, 'У меня тоже все получается.', '004'),
+(10, 'Отлично. Тогда до встречи!', '001'),
+(11, 'До встречи!', '002'),
+(12, 'Пока!', '003'),
+(13, 'До встречи!', '004');
